@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <script src="https://cdn.tailwindcss.com"></script>
+    </head>
+
+    <body style="overflow: hidden;">
+        <div class="bg-slate-300 flex flex-col h-screen">
+            <div class="flex flex-row h-1/2 mt-4">
+                <div class="flex flex-col items-center">
+                    <div class="text-2xl">No Filter</div>
+                    <div id="canvasA" class="border-2 w-96 h-5/6 bg-white m-2">
+
+                    </div>
+                </div>
+    
+                <div class="flex flex-col items-center">
+                    <div class="text-2xl">Geometric Interpolation</div>
+                    <div id="canvasB" class="border-2 w-96 h-5/6 bg-white m-2">
+                    
+                    </div>
+                </div>
+    
+                <div class="flex flex-col items-center">
+                    <div class="text-2xl">Bezier Curves</div>
+                    <div id="canvasC" class="border-2 w-96 h-5/6 bg-white m-2">
+                    
+                    </div>
+                </div>
+            </div>
+            
+            <div class="flex flex-row h-1/2">
+                <div class="flex flex-col items-center">
+                    <div class="text-2xl">Spring + Drag</div>
+                    <div id="canvasD" class="border-2 w-96 h-5/6 bg-white m-2">
+
+                    </div>
+                </div>
+                
+                <div class="flex flex-col items-center">
+                    <div class="text-2xl">Savitzky-Golay 5th Deg.</div>
+                    <div id="canvasE" class="border-2 w-96 h-5/6 bg-white m-2">
+                    
+                    </div>
+                </div>
+
+                <div class="flex flex-col items-center">
+                    <div class="text-2xl">Savitzky-Golay 9th Deg.</div>
+                    <div id="canvasF" class="border-2 w-96 h-5/6 bg-white m-2">
+                    
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script src="./stabilizer_test.js"></script>
+    </body>
+</html>
