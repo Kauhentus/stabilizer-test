@@ -455,10 +455,12 @@ class Engine {
     compareSDFV2(pixelReference){
         console.log("Calculating SDF for schema: ", this.scheme)
         
+        // calculate SDF
         const calcSDF = (width, height, pixels = []) => {
             const SDF = new Array(width * height).fill(0);
             const fastDist = (a, b, c, d) => (a - c) ** 2 + (b - d) ** 2;
 
+            // for each pixel
             for(let i = 0; i < SDF.length * 4; i += 4){
                 let x = (i / 4) % this.width | 0;
                 let y = (i / 4) / this.width | 0;
@@ -466,6 +468,8 @@ class Engine {
                 if(pixels.some(n => n[0] == x & n[1] == y)){
                     SDF[i / 4] = -1;
                 } else {
+                    // if not on stroke
+                    // find distance from stroke
                     let smallestDist = Infinity;
                     
                     for(let p of pixels){
@@ -485,6 +489,7 @@ class Engine {
             return SDF;
         }
 
+        // convert points to pixels
         for(let i = 0; i < this.finalStrokes.length; i++){
             let currentStroke = this.finalStrokes[i];
 
@@ -505,6 +510,7 @@ class Engine {
         const SDF = calcSDF(this.width, this.height, this.finalPixels[this.finalPixels.length - 1]);
         const referenceSDF = calcSDF(this.width, this.height, pixelReference);
 
+        // draw reference stroke
         for(let i = 0; i < SDF.length * 4; i += 4){
             if (referenceSDF[i / 4] == -1){
                 newPixels[i] = 200;
@@ -515,7 +521,7 @@ class Engine {
                 continue;
             }
             
-            if (SDF[i / 4] == -1){
+            /*if (SDF[i / 4] == -1){
                 newPixels[i] = 0;
                 newPixels[i + 1] = 0;
                 newPixels[i + 2] = 0;
@@ -533,17 +539,18 @@ class Engine {
             newPixels[i] = 255 * (referenceSDF[i / 4]);
             newPixels[i + 1] = 255 * (referenceSDF[i / 4]);
             newPixels[i + 2] = 255;
-            newPixels[i + 3] = 255;
+            newPixels[i + 3] = 255;*/
         }
 
-        /*for(let pixel of this.finalPixels[this.finalPixels.length - 1]){
+        // draw user stroke using overlapping SDF data
+        for(let pixel of this.finalPixels[this.finalPixels.length - 1]){
             let i = (pixel[1] * this.width + pixel[0]) * 4;
 
             newPixels[i] = 255 * referenceSDF[i / 4] * 8;
             newPixels[i + 1] = 0;
             newPixels[i + 2] = 0;
             newPixels[i + 3] = 255;
-        }*/
+        }
 
         this.ctx.putImageData(newImageData, 0, 0);
         this.SDF = SDF;
